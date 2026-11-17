@@ -1,0 +1,71 @@
+[project]
+name = "opspilot"
+version = "0.1.0"
+description = "Analytics-first IT operations platform with AI-assisted incident triage"
+requires-python = ">=3.12"
+license = {text = "MIT"}
+
+dependencies = [
+    "fastapi==0.115.6",
+    "uvicorn[standard]==0.34.0",
+    "pydantic==2.10.4",
+    "pydantic-settings==2.7.1",
+    "sqlalchemy==2.0.36",
+    "alembic==1.14.1",
+    "psycopg[binary]==3.2.4",
+    "python-jose[cryptography]==3.3.0",
+    "passlib[bcrypt]==1.7.4",
+    "argon2-cffi==23.1.0",
+    "structlog==24.4.0",
+    "httpx==0.28.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest==8.3.4",
+    "pytest-asyncio==0.25.0",
+    "pytest-cov==6.0.0",
+    "httpx==0.28.1",
+    "ruff==0.8.6",
+    "mypy==1.14.1",
+]
+dbt = [
+    "dbt-core==1.9.1",
+    "dbt-postgres==1.9.1",
+]
+llm = [
+    "openai==1.58.1",
+]
+
+[build-system]
+requires = ["setuptools>=75.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["app*", "scripts*"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "SIM", "T20"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+asyncio_mode = "auto"
+markers = [
+    "unit: Unit tests (no database)",
+    "integration: Integration tests (requires database)",
+    "security: Security and adversarial tests",
+]
+
+[tool.mypy]
+python_version = "3.12"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
