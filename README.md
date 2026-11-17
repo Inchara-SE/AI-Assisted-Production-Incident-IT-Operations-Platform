@@ -8,55 +8,7 @@ Implemented	Confirmed complete in `IMPLEMENTATION_STATUS.md`
 Planned	Scoped but not yet complete
 Conceptual	Design intent or diagram only; not a production requirement
 ---
-At a glance
-			
-01 Operational data<br>Validated alerts and incident history	02 Analytics engineering<br>Tested dbt facts, dimensions and marts	03 Operational intelligence<br>Governed metrics and dashboards	04 Evidence-grounded AI<br>Cited suggestions with human review
 
-Dimension	Design
-Primary user	On-call engineer; secondary users include analysts, service owners and engineering managers
-Primary portfolio focus	Analytics Engineering: SQL, dimensional modeling, dbt, data quality, metric governance and BI
-Operational interface	FastAPI + OpenAPI/Swagger
-Operational persistence	PostgreSQL `ops` schema
-Analytical transformation	dbt Core + PostgreSQL adapter
-Analytical output	PostgreSQL `analytics` schema
-BI consumer	Metabase with read-only analytics access
-Knowledge retrieval	PostgreSQL full-text search over approved runbook versions
-AI posture	Mock-first provider abstraction; optional LLM; advisory only
-Demo data	Deterministic synthetic incidents and alerts; no production telemetry
----
-Contents
-Problem and motivation
-Product capabilities
-Architecture
-End-to-end data flow
-Event identity and ingestion correctness
-Incident lifecycle
-Operational data model
-Analytics engineering and dbt
-Governed metric catalog
-AI-assisted triage and evidence controls
-Evaluation methodology
-Dashboards
-Repository structure
-Local setup
-API overview
-Quality, testing and CI
-Security and safety boundaries
-Design decisions and trade-offs
-Limitations and roadmap
-Demo walkthrough
-Project documentation
----
-1. Problem and motivation
-Incident response data is fragmented across alert notifications, service metadata, lifecycle changes, troubleshooting documents and reviewer decisions. Even when the underlying events are available, teams struggle to answer basic questions consistently:
-How many distinct incidents occurred in a reporting period?
-How long did acknowledged incidents take to receive their first acknowledgement?
-How long did finally resolved incidents remain open, including reopen cycles?
-Which services generate repeated alert events or recurring failures?
-Which runbook passage supports a proposed investigation step?
-Can a reported KPI be traced to a tested transformation and an explicit eligibility rule?
-OpsPilot demonstrates a compact answer. An operational application creates traceable source records, and the analytical layer is treated as a first-class product: dbt models define reusable transformations, tests enforce data quality, metric contracts govern business logic, and Metabase presents curated reporting models.
-```text
 Raw operational events
         ↓
 Reliable event identity + incident lifecycle
