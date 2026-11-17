@@ -9,44 +9,6 @@ Planned	Scoped but not yet complete
 Conceptual	Design intent or diagram only; not a production requirement
 ---
 
-Raw operational events
-        ↓
-Reliable event identity + incident lifecycle
-        ↓
-Documented and tested dbt transformations
-        ↓
-Governed operational metrics
-        ↓
-Decision-ready dashboards and traceable investigation context
-```
-2. Product capabilities
-> Per-capability status (Implemented / Planned / Conceptual): **[NEEDS INPUT — reconcile each bullet against `IMPLEMENTATION_STATUS.md`]**. The lists below describe the intended scope.
-2.1 Operational platform
-Validate and normalize simulated alert payloads.
-Distinguish exact delivery retries from distinct repeat alert events.
-Correlate related alerts into incidents with deterministic rules.
-Maintain service ownership and dependency metadata.
-Enforce a defined incident state machine.
-Preserve transitions, review decisions and audit history.
-2.2 Analytics engineering
-Keep operational source tables separate from dbt-managed analytical models.
-Use staging, intermediate, fact, dimension and mart layers.
-Define explicit fact grains and reusable dimensions.
-Test uniqueness, nullability, relationships, accepted values and business rules.
-Document metrics, assumptions, eligibility, exclusions and lineage.
-Reconcile analytical outputs against independent known fixtures.
-2.3 Operational intelligence
-Analyze incident volume, acknowledgement and resolution durations.
-Compare service and team patterns.
-Separate delivery replay rate from repeat-alert share.
-Track recurrence using a defined seven-day observation rule.
-Measure recommendation review outcomes without treating approval as proof of correctness.
-2.4 AI-assisted investigation
-Search approved, versioned runbooks and retrieve exact source passages.
-Generate structured suggestions through a provider interface.
-Validate citations against retrieved approved passages.
-Return an explicit insufficient-evidence response when evidence is absent.
-Require human review; generated instructions are never executed.
 3. Architecture
 3.1 System context
 ![OpsPilot architecture overview](./docs/assets/opspilot-architecture.svg)
